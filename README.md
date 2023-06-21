@@ -1,73 +1,55 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
-</p>
+# Trivia.ai
+[![GitHub](https://img.shields.io/github/license/AlissonRaphael/api_trivia.ai)](https://github.com/AlissonRaphael/api_trivia.ai/blob/main/LICENSE)
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+This repository contains the implementation of an api for a game show inspired by trivia-crack (perguntados)
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
-
-## Description
-
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Contents
+- [Installation](#installation)
+- [Contact](#contact)
+- [License](#license)
 
 ## Installation
+Requires at least Node.js version 10 or later.
 
-```bash
-$ npm install
+### Windows:
+
+Download the Windows Installer directly from the website [nodejs.org](https://nodejs.org/en/download/).
+
+or via package manager:
+
+__Using chocolatay__
+```sh
+choco install nodejs.install
 ```
 
-## Running the app
+### Linux:
 
-```bash
-# development
-$ npm run start
+Download the linux binaries directly from the website [nodejs.org](https://nodejs.org/en/download/)
 
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+__Install a binary package via pkg__:
+```sh
+pkg install node
 ```
 
-## Test
+### macOS X:
 
-```bash
-# unit tests
-$ npm run test
+Download the macOS Installer directly from the website [nodejs.org](https://nodejs.org/en/download/).
 
-# e2e tests
-$ npm run test:e2e
+Via package manager:
 
-# test coverage
-$ npm run test:cov
+__Using brew__
+```sh
+brew install node
 ```
 
-## Support
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+### Clone
 
-## Stay in touch
+Clone this repo to your local machine using `https://github.com/AlissonRaphael/api_trivia.ai.git`
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+## Contact
+- Github: [alissonraphael](https://gist.github.com/AlissonRaphael)
 
 ## License
 
-Nest is [MIT licensed](LICENSE).
+[![GitHub](https://img.shields.io/github/license/AlissonRaphael/api_trivia.ai)](https://github.com/AlissonRaphael/api_trivia.ai/blob/main/LICENSE)

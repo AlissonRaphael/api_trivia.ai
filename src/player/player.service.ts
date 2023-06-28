@@ -1,6 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { CreatePlayer } from './dtos/create-player.dto';
 import { Player } from './interfaces/player.interface';
+import { v4 as uuidV4 } from 'uuid';
 
 @Injectable()
 export class PlayerService {
@@ -8,7 +9,29 @@ export class PlayerService {
 
   private players: Player[] = [];
 
-  async createPlayer(player: CreatePlayer): Promise<void> {
-    this.logger.log({ player });
+  async save(player: CreatePlayer): Promise<void> {
+    this._save(player);
+  }
+
+  async findAll(): Promise<Player[]> {
+    return this._findAll();
+  }
+
+  private _findAll(): Player[] {
+    return this.players;
+  }
+
+  private _save(player: CreatePlayer): void {
+    const { name, email, phone } = player;
+    const data: Player = {
+      id: uuidV4(),
+      name,
+      email,
+      phone,
+      ranking: 'E',
+      position: 0,
+      avatar: '',
+    };
+    this.players.push(data);
   }
 }

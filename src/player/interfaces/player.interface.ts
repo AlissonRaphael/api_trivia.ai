@@ -5,5 +5,5 @@ export interface Player {
   name: string;
   avatar: string;
   ranking: string;
-  position: string;
+  position: number;
 }

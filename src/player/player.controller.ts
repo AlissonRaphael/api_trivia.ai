@@ -1,6 +1,7 @@
-import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
 
 import { CreatePlayer } from './dtos/create-player.dto';
+import { UpdatePlayer } from './dtos/update-player.dto';
 import { PlayerService } from './player.service';
 import { Player } from './interfaces/player.interface';
 
@@ -23,8 +24,11 @@ export class PlayerController {
     await this.playerService.save(player);
   }
 
-  @Get('/:id')
-  async read(@Param() param: { id: string }): Promise<string> {
-    return JSON.stringify({ id: param.id });
+  @Put('/:id')
+  async update(
+    @Param() params: { id: string },
+    @Body() player: UpdatePlayer,
+  ): Promise<Player> {
+    return await this.playerService.update(params.id, player);
   }
 }

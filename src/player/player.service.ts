@@ -1,5 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { CreatePlayer } from './dtos/create-player.dto';
+import { UpdatePlayer } from './dtos/update-player.dto';
 import { Player } from './interfaces/player.interface';
 import { v4 as uuidV4 } from 'uuid';
 
@@ -21,16 +22,16 @@ export class PlayerService {
     this._save(player);
   }
 
-  async findAll(): Promise<Player[]> {
-    return this._findAll();
-  }
-
   private _findAll(): Player[] {
     return this.players;
   }
 
   private _findById(id: string): Player {
     return this.players.find((player: Player) => player.id === id);
+  }
+
+  async update(playerId: string, player: UpdatePlayer): Promise<Player> {
+    return this._update(playerId, player);
   }
 
   private _save(player: CreatePlayer): void {
@@ -45,5 +46,15 @@ export class PlayerService {
       avatar: '',
     };
     this.players.push(data);
+  }
+
+  private _update(playerId: string, player: UpdatePlayer): Player {
+    const index = this.players.findIndex((row: Player) => {
+      return row.id === playerId;
+    });
+
+    const { id, email, phone } = this.players[index];
+    this.players[index] = { id, email, phone, ...player };
+    return this.players[index];
   }
 }

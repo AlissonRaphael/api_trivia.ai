@@ -10,7 +10,12 @@ export class PlayerController {
 
   @Get()
   async index(): Promise<Player[]> {
-    return this.playerService.findAll();
+    return await this.playerService.findAll();
+  }
+
+  @Get('/:id')
+  async read(@Param() params: { id: string }): Promise<Player> {
+    return await this.playerService.find(params.id);
   }
 
   @Post()

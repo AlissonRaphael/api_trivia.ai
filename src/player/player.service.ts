@@ -9,6 +9,14 @@ export class PlayerService {
 
   private players: Player[] = [];
 
+  async findAll(): Promise<Player[]> {
+    return this._findAll();
+  }
+
+  async find(id: string): Promise<Player> {
+    return this._findById(id);
+  }
+
   async save(player: CreatePlayer): Promise<void> {
     this._save(player);
   }
@@ -19,6 +27,10 @@ export class PlayerService {
 
   private _findAll(): Player[] {
     return this.players;
+  }
+
+  private _findById(id: string): Player {
+    return this.players.find((player: Player) => player.id === id);
   }
 
   private _save(player: CreatePlayer): void {

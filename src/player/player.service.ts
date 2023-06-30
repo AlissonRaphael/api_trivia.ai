@@ -22,6 +22,10 @@ export class PlayerService {
     this._save(player);
   }
 
+  async destroy(id: string): Promise<void> {
+    this._destroy(id);
+  }
+
   private _findAll(): Player[] {
     return this.players;
   }
@@ -56,5 +60,13 @@ export class PlayerService {
     const { id, email, phone } = this.players[index];
     this.players[index] = { id, email, phone, ...player };
     return this.players[index];
+  }
+
+  private _destroy(id: string) {
+    const index = this.players.findIndex((row: Player) => {
+      return row.id === id;
+    });
+
+    this.players.splice(index, 1);
   }
 }

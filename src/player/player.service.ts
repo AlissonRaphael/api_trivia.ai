@@ -1,4 +1,4 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { CreatePlayer } from './dtos/create-player.dto';
 import { UpdatePlayer } from './dtos/update-player.dto';
 import { Player } from './interfaces/player.interface';
@@ -14,8 +14,9 @@ export class PlayerService {
     return this._findAll();
   }
 
-  async find(id: string): Promise<Player> {
-    return this._findById(id);
+  async find(email: string): Promise<Player> {
+    const index = this._find('email', email);
+    return this.players[index];
   }
 
   async save(player: CreatePlayer): Promise<void> {
@@ -30,8 +31,16 @@ export class PlayerService {
     return this.players;
   }
 
-  private _findById(id: string): Player {
-    return this.players.find((player: Player) => player.id === id);
+  private _find(key: string, value: string): number {
+    const index = this.players.findIndex((player: Player) => {
+      return player[key] === value;
+    });
+
+    if (index === -1) {
+      throw new NotFoundException('user not found');
+    }
+
+    return index;
   }
 
   async update(playerId: string, player: UpdatePlayer): Promise<Player> {
@@ -53,20 +62,14 @@ export class PlayerService {
   }
 
   private _update(playerId: string, player: UpdatePlayer): Player {
-    const index = this.players.findIndex((row: Player) => {
-      return row.id === playerId;
-    });
-
+    const index = this._find('id', playerId);
     const { id, email, phone } = this.players[index];
     this.players[index] = { id, email, phone, ...player };
     return this.players[index];
   }
 
-  private _destroy(id: string) {
-    const index = this.players.findIndex((row: Player) => {
-      return row.id === id;
-    });
-
+  private _destroy(id: string): void {
+    const index = this._find('id', id);
     this.players.splice(index, 1);
   }
 }

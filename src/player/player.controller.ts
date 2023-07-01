@@ -5,26 +5,26 @@ import { UpdatePlayer } from './dtos/update-player.dto';
 import { PlayerService } from './player.service';
 import { Player } from './interfaces/player.interface';
 
-@Controller('api/v1/player')
+@Controller('api/v1')
 export class PlayerController {
   constructor(private readonly playerService: PlayerService) {}
 
-  @Get()
+  @Get('/players')
   async index(): Promise<Player[]> {
     return await this.playerService.findAll();
   }
 
-  @Get('/:id')
-  async read(@Param() params: { id: string }): Promise<Player> {
-    return await this.playerService.find(params.id);
+  @Get('/player')
+  async read(@Body() player: { email: string }): Promise<Player> {
+    return await this.playerService.find(player.email);
   }
 
-  @Post()
+  @Post('/player')
   async create(@Body() player: CreatePlayer) {
     await this.playerService.save(player);
   }
 
-  @Put('/:id')
+  @Put('/player/:id')
   async update(
     @Param() params: { id: string },
     @Body() player: UpdatePlayer,
@@ -32,7 +32,7 @@ export class PlayerController {
     return await this.playerService.update(params.id, player);
   }
 
-  @Delete('/:id')
+  @Delete('/player/:id')
   async delete(@Param() params: { id: string }): Promise<void> {
     await this.playerService.destroy(params.id);
   }

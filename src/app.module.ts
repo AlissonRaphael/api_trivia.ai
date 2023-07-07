@@ -1,8 +1,11 @@
 import { Module } from '@nestjs/common';
-import { PlayerModule } from './player/player.module';
+import { PlayerModule } from './modules/player/player.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
+
+import { typeormConfig } from './config/typeorm.config';
 
 @Module({
-  imports: [PlayerModule],
+  imports: [TypeOrmModule.forRoot(typeormConfig), PlayerModule],
   controllers: [],
   providers: [],
 })

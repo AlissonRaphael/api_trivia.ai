@@ -6,6 +6,7 @@ import {
   Param,
   Post,
   Put,
+  Query,
 } from '@nestjs/common';
 
 import { CreatePlayer } from './dtos/create-player.dto';
@@ -18,7 +19,7 @@ export class PlayerController {
   constructor(private readonly playerService: PlayerService) {}
 
   @Get('/players')
-  async index(): Promise<Player[]> {
+  async index(@Query() query: { page: number }): Promise<Player[]> {
     return await this.playerService.findAll();
   }
 

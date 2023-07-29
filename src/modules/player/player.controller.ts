@@ -6,27 +6,25 @@ import {
   Param,
   Post,
   Put,
-  Query,
 } from '@nestjs/common';
-import { Players } from '@prisma/client';
+import { Player } from '@prisma/client';
 
 import { CreatePlayer } from './dtos/create-player.dto';
 import { UpdatePlayer } from './dtos/update-player.dto';
 import { PlayerService } from './player.service';
-import { Player } from './interfaces/player.interface';
 
 @Controller('api/v1')
 export class PlayerController {
   constructor(private readonly playerService: PlayerService) {}
 
   @Get('/players')
-  async index(@Query() query: { page: number }): Promise<Players[]> {
+  async index(): Promise<Player[]> {
     return await this.playerService.findAll();
   }
 
-  @Get('/player')
-  async read(@Body() player: { email: string }): Promise<Players> {
-    return await this.playerService.find(player.email);
+  @Get('/player/:id')
+  async read(@Param() params: { id: string }): Promise<Player> {
+    return await this.playerService.find(params.id);
   }
 
   @Post('/player')
@@ -38,7 +36,7 @@ export class PlayerController {
   async update(
     @Param() params: { id: string },
     @Body() player: UpdatePlayer,
-  ): Promise<Players> {
+  ): Promise<Player> {
     return await this.playerService.update(params.id, player);
   }
 

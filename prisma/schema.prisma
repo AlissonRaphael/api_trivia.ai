@@ -10,15 +10,15 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Players {
+model Player {
   id          String      @id     @default(uuid())
   phone       String      @unique
   email       String      @unique
-  name        String      @unique
-  avatar      String
-  ranking     String
-  position    String
+  name        String?      @unique
+  avatar      String?
+  ranking     String?
+  position    String?
   created_at  DateTime            @default(now())
 
-  @@map("players")
+  @@map("player")
 }

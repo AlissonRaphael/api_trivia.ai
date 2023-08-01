@@ -6,6 +6,8 @@ import {
   Param,
   Post,
   Put,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
 import { Player } from '@prisma/client';
 
@@ -28,6 +30,7 @@ export class PlayerController {
   }
 
   @Post('/player')
+  @UsePipes(ValidationPipe)
   async create(@Body() player: CreatePlayer) {
     await this.playerService.save(player);
   }

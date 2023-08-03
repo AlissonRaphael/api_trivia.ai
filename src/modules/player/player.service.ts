@@ -11,8 +11,12 @@ export class PlayerService {
 
   constructor(private prisma: PrismaService) {}
 
-  async findAll(): Promise<Player[]> {
-    return await this.prisma.player.findMany();
+  async findAll(query: { page: number; size: number }): Promise<Player[]> {
+    const { size, page } = query;
+    return await this.prisma.player.findMany({
+      take: size,
+      skip: (page - 1) * size,
+    });
   }
 
   async find(id: string): Promise<Player> {

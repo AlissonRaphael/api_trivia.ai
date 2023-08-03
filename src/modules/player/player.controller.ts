@@ -6,6 +6,7 @@ import {
   Param,
   Post,
   Put,
+  Query,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
@@ -14,14 +15,15 @@ import { Player } from '@prisma/client';
 import { CreatePlayer } from './dtos/create-player.dto';
 import { UpdatePlayer } from './dtos/update-player.dto';
 import { PlayerService } from './player.service';
+import { PlayerValidatorParamsPipe } from './pipes/player-validator-params.pipe';
 
 @Controller('api/v1')
 export class PlayerController {
   constructor(private readonly playerService: PlayerService) {}
 
   @Get('/players')
-  async index(): Promise<Player[]> {
-    return await this.playerService.findAll();
+  async index(@Query(PlayerValidatorParamsPipe) query): Promise<Player[]> {
+    return await this.playerService.findAll(query);
   }
 
   @Get('/player/:id')

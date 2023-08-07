@@ -1,4 +1,4 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { Player, Prisma } from '@prisma/client';
 
 import { PrismaService } from 'src/prisma/prisma.service';
@@ -20,7 +20,13 @@ export class PlayerService {
   }
 
   async find(id: string): Promise<Player> {
-    return await this.prisma.player.findUnique({ where: { id } });
+    const player = await this.prisma.player.findUnique({ where: { id } });
+
+    if (!player) {
+      throw new NotFoundException('Player not found!');
+    }
+
+    return player;
   }
 
   async save(player: CreatePlayer): Promise<void> {
@@ -30,6 +36,7 @@ export class PlayerService {
   }
 
   async update(id: string, player: UpdatePlayer): Promise<Player> {
+    await this.find(id);
     return await this.prisma.player.update({
       where: { id },
       data: player as Prisma.PlayerUpdateInput,
@@ -37,6 +44,7 @@ export class PlayerService {
   }
 
   async destroy(id: string): Promise<void> {
+    await this.find(id);
     await this.prisma.player.delete({ where: { id } });
   }
 }

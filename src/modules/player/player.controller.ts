@@ -15,14 +15,14 @@ import { Player } from '@prisma/client';
 import { CreatePlayer } from './dtos/create-player.dto';
 import { UpdatePlayer } from './dtos/update-player.dto';
 import { PlayerService } from './player.service';
-import { PlayerValidatorParamsPipe } from './pipes/player-validator-params.pipe';
+import { PlayerValidatorQueryPipe } from './pipes/player-validator-query.pipe';
 
 @Controller('api/v1')
 export class PlayerController {
   constructor(private readonly playerService: PlayerService) {}
 
   @Get('/players')
-  async index(@Query(PlayerValidatorParamsPipe) query): Promise<Player[]> {
+  async index(@Query(PlayerValidatorQueryPipe) query): Promise<Player[]> {
     return await this.playerService.findAll(query);
   }
 

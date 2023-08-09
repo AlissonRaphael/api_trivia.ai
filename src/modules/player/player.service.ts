@@ -1,7 +1,7 @@
 import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { Player, Prisma } from '@prisma/client';
 
-import { PrismaService } from 'src/prisma/prisma.service';
+import { PrismaService } from 'src/shared/database/prisma/prisma.service';
 import { UpdatePlayer } from './dtos/update-player.dto';
 import { CreatePlayer } from './dtos/create-player.dto';
 

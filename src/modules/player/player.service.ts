@@ -1,4 +1,9 @@
-import { Injectable, Logger, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  Logger,
+  NotAcceptableException,
+  NotFoundException,
+} from '@nestjs/common';
 import { Player, Prisma } from '@prisma/client';
 
 import { PrismaService } from 'src/shared/database/prisma/prisma.service';
@@ -30,6 +35,20 @@ export class PlayerService {
   }
 
   async save(player: CreatePlayer): Promise<void> {
+    const foundPlayer = await this.prisma.player.findFirst({
+      where: {
+        OR: [
+          { phone: player.phone },
+          { email: player.email },
+          { name: player.name },
+        ],
+      },
+    });
+
+    if (foundPlayer) {
+      throw new NotAcceptableException('Player already exists!');
+    }
+
     await this.prisma.player.create({
       data: player as Prisma.PlayerCreateInput,
     });
@@ -37,9 +56,12 @@ export class PlayerService {
 
   async update(id: string, player: UpdatePlayer): Promise<Player> {
     await this.find(id);
+
+    const { name, avatar, ranking, position } = player;
+
     return await this.prisma.player.update({
       where: { id },
-      data: player as Prisma.PlayerUpdateInput,
+      data: { name, avatar, ranking, position } as Prisma.PlayerUpdateInput,
     });
   }
 

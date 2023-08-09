@@ -11,14 +11,35 @@ datasource db {
 }
 
 model Player {
-  id          String      @id     @default(uuid())
-  phone       String      @unique
-  email       String      @unique
-  name        String?      @unique
-  avatar      String?
-  ranking     String?
-  position    String?
-  created_at  DateTime            @default(now())
+  id         String   @id @default(uuid())
+  phone      String   @unique
+  email      String   @unique
+  name       String?  @unique
+  avatar     String?
+  ranking    String?
+  position   String?
+  created_at DateTime @default(now())
+
+  PlayerChallenge PlayerChallenge[]
 
   @@map("player")
+}
+
+model Challenge {
+  id         String   @id @default(uuid())
+  status     String
+  config     Json
+  created_at DateTime @default(now())
+
+  PlayerChallenge PlayerChallenge[]
+
+  @@map("challenge")
+}
+
+model PlayerChallenge {
+  id          String    @id @default(uuid())
+  player      Player    @relation(fields: [playerId], references: [id])
+  playerId    String
+  challenge   Challenge @relation(fields: [challengeId], references: [id])
+  challengeId String
 }

@@ -25,6 +25,18 @@ export class ChallengeService {
     });
   }
 
+  async find(id: string): Promise<Challenge> {
+    const challenge = await this.prismaService.challenge.findUnique({
+      where: { id },
+    });
+
+    if (!challenge) {
+      throw new NotFoundException('Challenge not found!');
+    }
+
+    return challenge;
+  }
+
   async save(challenge: CreateChallenge): Promise<void> {
     const { challengerId, challengedId, status, config } = challenge;
     const [challenger, challenged] = await Promise.all([

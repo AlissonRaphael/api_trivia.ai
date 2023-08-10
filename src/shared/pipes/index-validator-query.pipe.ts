@@ -1,6 +1,6 @@
 import { PipeTransform } from '@nestjs/common';
 
-export class PlayerValidatorQueryPipe implements PipeTransform {
+export class IndexValidatorQueryPipe implements PipeTransform {
   transform(value: any): any {
     const size = Number(value.size);
     const page = Number(value.page);

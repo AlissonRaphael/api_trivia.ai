@@ -1,4 +1,13 @@
-import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Query,
+  UsePipes,
+  ValidationPipe,
+} from '@nestjs/common';
 import { Challenge } from '@prisma/client';
 import { ChallengeService } from './challenge.service';
 import { CreateChallenge } from './dtos/create-challenge-dto';
@@ -22,6 +31,7 @@ export class ChallengeController {
   }
 
   @Post('/challenge')
+  @UsePipes(ValidationPipe)
   async create(@Body() challenge: CreateChallenge): Promise<void> {
     await this.challengeService.save(challenge);
   }

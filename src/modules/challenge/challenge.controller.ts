@@ -16,6 +16,11 @@ export class ChallengeController {
     return await this.challengeService.findAll(params.playerId, query);
   }
 
+  @Get('/challenge/:id')
+  async read(@Param() params: { id: string }): Promise<Challenge> {
+    return await this.challengeService.find(params.id);
+  }
+
   @Post('/challenge')
   async create(@Body() challenge: CreateChallenge): Promise<void> {
     await this.challengeService.save(challenge);

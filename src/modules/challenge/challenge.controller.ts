@@ -8,12 +8,12 @@ import { IndexValidatorQueryPipe } from 'src/shared/pipes/index-validator-query.
 export class ChallengeController {
   constructor(private readonly challengeService: ChallengeService) {}
 
-  @Get('/challenges/:id')
+  @Get('/challenges/:playerId')
   async index(
-    @Param() params: { id: string },
+    @Param() params: { playerId: string },
     @Query(IndexValidatorQueryPipe) query,
   ): Promise<Challenge[]> {
-    return await this.challengeService.findAll(params.id, query);
+    return await this.challengeService.findAll(params.playerId, query);
   }
 
   @Post('/challenge')

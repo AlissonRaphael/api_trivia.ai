@@ -8,7 +8,7 @@ export class ChallengeService {
   constructor(private prismaService: PrismaService) {}
 
   async findAll(
-    id: string,
+    playerId: string,
     query: { page: number; size: number },
   ): Promise<Challenge[]> {
     const { page, size } = query;
@@ -18,7 +18,7 @@ export class ChallengeService {
       where: {
         PlayerChallenge: {
           some: {
-            playerId: id,
+            playerId,
           },
         },
       },

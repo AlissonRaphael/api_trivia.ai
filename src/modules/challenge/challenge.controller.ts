@@ -4,6 +4,7 @@ import {
   Get,
   Param,
   Post,
+  Put,
   Query,
   UsePipes,
   ValidationPipe,
@@ -12,6 +13,7 @@ import { Challenge } from '@prisma/client';
 import { ChallengeService } from './challenge.service';
 import { CreateChallenge } from './dtos/create-challenge-dto';
 import { IndexValidatorQueryPipe } from 'src/shared/pipes/index-validator-query.pipe';
+import { UpdateChallenge } from './dtos/update-challenge.dto';
 
 @Controller('api/v1')
 export class ChallengeController {
@@ -34,5 +36,13 @@ export class ChallengeController {
   @UsePipes(ValidationPipe)
   async create(@Body() challenge: CreateChallenge): Promise<void> {
     await this.challengeService.save(challenge);
+  }
+
+  @Put('/challenge/:id')
+  async update(
+    @Param() params: { id: string },
+    @Body() challenge: UpdateChallenge,
+  ): Promise<Challenge> {
+    return await this.challengeService.update(params.id, challenge);
   }
 }

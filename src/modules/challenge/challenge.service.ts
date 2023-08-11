@@ -1,7 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { Challenge } from '@prisma/client';
+import { Challenge, Prisma } from '@prisma/client';
 import { PrismaService } from 'src/shared/database/prisma/prisma.service';
 import { CreateChallenge } from './dtos/create-challenge-dto';
+import { UpdateChallenge } from './dtos/update-challenge.dto';
 
 @Injectable()
 export class ChallengeService {
@@ -56,6 +57,17 @@ export class ChallengeService {
           create: [{ playerId: challengerId }, { playerId: challengedId }],
         },
       },
+    });
+  }
+
+  async update(id: string, challenge: UpdateChallenge): Promise<Challenge> {
+    await this.find(id);
+
+    const { status, config } = challenge;
+
+    return await this.prismaService.challenge.update({
+      where: { id },
+      data: { status, config } as Prisma.ChallengeUpdateInput,
     });
   }
 }

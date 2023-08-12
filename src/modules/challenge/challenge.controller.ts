@@ -14,10 +14,14 @@ import { ChallengeService } from './challenge.service';
 import { CreateChallenge } from './dtos/create-challenge-dto';
 import { IndexValidatorQueryPipe } from 'src/shared/pipes/index-validator-query.pipe';
 import { UpdateChallenge } from './dtos/update-challenge.dto';
+import { HttpService } from '@nestjs/axios';
 
 @Controller('api/v1')
 export class ChallengeController {
-  constructor(private readonly challengeService: ChallengeService) {}
+  constructor(
+    private readonly challengeService: ChallengeService,
+    private readonly httpService: HttpService,
+  ) {}
 
   @Get('/challenges/:playerId')
   async index(

@@ -1,5 +1,4 @@
 import { IsNotEmpty } from 'class-validator';
-import { Difficulty } from '../types/difficulty';
 
 export class CreateChallenge {
   @IsNotEmpty()
@@ -12,20 +11,26 @@ export class CreateChallenge {
   status: string;
 
   @IsNotEmpty()
-  difficulty: Difficulty;
+  matches: number;
 
   @IsNotEmpty()
-  config: Config;
+  themes: string[];
+
+  @IsNotEmpty()
+  difficulty: number;
+
+  config?: Config;
 }
 
 type Config = {
   matches: number;
   questions: Question[];
-  winner: string | null;
-  score: { challenged: number; challenger: number };
+  winner?: string;
+  score?: { challenged: number; challenger: number };
 };
 
 type Question = {
+  theme: string;
   question: string;
   answers: { a: string; b: string; c: string; d: string };
   correctAlternative: number;

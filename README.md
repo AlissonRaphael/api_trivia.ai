@@ -12,6 +12,7 @@ This repository contains the implementation of an api for a game show inspired b
 ![GithubPages Badge](https://img.shields.io/badge/-ESLint-000?style=flat-square&logo=eslint&logoColor=white&color=4B32C3)
 ![GithubPages Badge](https://img.shields.io/badge/-Prettier-000?style=flat-square&logo=prettier&logoColor=black&color=F7B93E)
 ![GithubPages Badge](https://img.shields.io/badge/-Docker-000?style=flat-square&logo=docker&logoColor=white&color=2496ED)
+![GithubPages Badge](https://img.shields.io/badge/-OpenAI/GPT3.5-000?style=flat-square&logo=openai&logoColor=white&color=412991)
 
 ## Contents
 - [Installation](#installation)

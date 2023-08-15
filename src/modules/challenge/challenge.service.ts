@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Challenge, Prisma } from '@prisma/client';
-import { PrismaService } from 'src/shared/database/prisma/prisma.service';
+import { PrismaService } from '../../shared/database/prisma/prisma.service';
 import { CreateChallenge } from './dtos/create-challenge-dto';
 import { UpdateChallenge } from './dtos/update-challenge.dto';
 
@@ -40,15 +40,6 @@ export class ChallengeService {
 
   async save(challenge: CreateChallenge): Promise<void> {
     const { challengerId, challengedId, status, config } = challenge;
-    const [challenger, challenged] = await Promise.all([
-      this.prismaService.player.findUnique({ where: { id: challengerId } }),
-      this.prismaService.player.findUnique({ where: { id: challengedId } }),
-    ]);
-
-    if (!challenger || !challenged) {
-      throw new NotFoundException('Players not found!');
-    }
-
     await this.prismaService.challenge.create({
       data: {
         status,

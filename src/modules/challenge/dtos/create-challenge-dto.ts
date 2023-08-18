@@ -19,19 +19,19 @@ export class CreateChallenge {
   @IsNotEmpty()
   difficulty: number;
 
-  config?: Config;
+  config?: ConfigType;
 }
 
-type Config = {
+export type ConfigType = {
   matches: number;
   questions: Question[];
   winner?: string;
   score?: { challenged: number; challenger: number };
 };
 
-type Question = {
+export type Question = {
   theme: string;
   question: string;
   answers: { a: string; b: string; c: string; d: string };
-  correctAlternative: number;
+  correct: string;
 };

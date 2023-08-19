@@ -3,6 +3,50 @@ import { QuestionBuilderConfig } from './interfaces/config.interface';
 
 @Injectable()
 export class QuestionBuilderService {
+  get question(): string {
+    return 'Crie uma pergunta chamada Q.';
+  }
+
+  get answers(): string {
+    return 'Crie 4 alternativas chamadas QA,QB,QC,QD para a pergunta Q.';
+  }
+
+  get tokensLimit(): string {
+    return 'A pergunta deve ter no máximo 40 tokens. Cada alternativa deve ter no máximo 18 tokens.';
+  }
+
+  get correct(): string {
+    return 'CA deve ser a letra correspondente a alternativa correta.';
+  }
+
+  theme(theme: string): string {
+    return `O tema da pergunta deve ser ${theme}.`;
+  }
+
+  level(level: string): string {
+    return `A pergunta deve ter o nível ${level}.`;
+  }
+
+  get warnings(): string {
+    return 'Essa chamada é feita por uma api. Não retorne nada, nenhum texto. Apenas um';
+  }
+
+  get _return(): string {
+    return `${this.structureType} conforme a estrutura: ${this.structureData}.`;
+  }
+
+  get structureType(): string {
+    return 'JSON';
+  }
+
+  get structureData(): string {
+    return JSON.stringify({
+      question: 'Q',
+      answers: { a: 'QA', b: 'QB', c: 'QC', d: 'QD' },
+      correct: 'CA',
+    });
+  }
+
   dificulty(index: number): string {
     return [
       'ensino básico',
@@ -14,23 +58,18 @@ export class QuestionBuilderService {
   }
 
   handle(config: QuestionBuilderConfig): string {
-    const { difficulty, matches, themes } = config;
+    const { difficulty, theme } = config;
     const level = this.dificulty(difficulty);
-    return `Crie ${matches} questões chamadas Q0;Q1;...Qn com 4 alternativas chamadas Q0a,Q0b,Q0c,Q0d para Q0; ...Qna,Qnb,Qnc,Qnd para Qn. Cada pergunta deve ter no máximo 40 tokens. Cada alternativa deve ter no máximo 15 tokens. A alternativa correta deve se chamar Q0_C para Q0; Q1_C para Q1; Qn_C para Qn. As perguntas devem ter o nível ${level}. Os temas das perguntas devem ser: ${themes.join(' T, ')}. Não retorne NADA. APENAS um array de objetos Javascript na estrutura ${JSON.stringify(DATA)} substituindo os valores correspondentes.`
+
+    return [
+      this.question,
+      this.answers,
+      this.tokensLimit,
+      this.correct,
+      this.theme(theme),
+      this.level(level),
+      this.warnings,
+      this._return,
+    ].join(' ');
   }
 }
-
-const DATA = [
-  {
-    question: 'Q0',
-    answers: { a: 'Q0a', b: 'Q0b', c: 'Q0c', d: 'Q0d' },
-    correct: 'Q0_C',
-    theme: 'T',
-  },
-  {
-    question: 'Qn',
-    answers: { a: 'Qna', b: 'Qnb', c: 'Qnc', d: 'Qnd' },
-    correct: 'Qn_C',
-    theme: 'T',
-  },
-];

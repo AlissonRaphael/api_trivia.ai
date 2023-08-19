@@ -1,3 +1,4 @@
+import crypto from 'crypto';
 import {
   Body,
   Controller,
@@ -46,57 +47,69 @@ export class ChallengeController {
   @Post('/challenge')
   @UsePipes(ValidationPipe)
   async create(@Body() challenge: CreateChallenge): Promise<void> {
-    try {
-      const { challengerId, challengedId } = challenge;
-      const [challenger, challenged] = await Promise.all([
-        this.playerService.find(challengerId),
-        this.playerService.find(challengedId),
-      ]);
+    const { challengerId, challengedId } = challenge;
+    const [challenger, challenged] = await Promise.all([
+      this.playerService.find(challengerId),
+      this.playerService.find(challengedId),
+    ]);
 
-      if (!challenger || !challenged) {
-        throw new NotFoundException('Players not found!');
-      }
-
-      const { matches, themes, difficulty } = challenge;
-      const question = this.questionBuilderService.handle({
-        difficulty,
-        themes,
-        matches,
-      });
-
-      const { status, data } = await this.httpService
-        .post<GPTResponse>(
-          'https://api.openai.com/v1/chat/completions',
-          {
-            model: 'gpt-3.5-turbo',
-            messages: [{ role: 'system', content: question }],
-          },
-          {
-            headers: {
-              Authorization: process.env.OPENAI_API_KEY,
-              'Content-Type': 'application/json',
-            },
-          },
-        )
-        .toPromise();
-
-      if (status !== 200) {
-        throw new InternalServerErrorException('Internal error');
-      }
-
-      const questions = data.choices[0].message.content;
-
-      await this.challengeService.save({
-        ...challenge,
-        config: {
-          matches,
-          score: { challenged: 0, challenger: 0 },
-          questions: JSON.parse(questions),
-        },
-      });
-    } catch (error) {
-      console.log(error);
+    if (!challenger || !challenged) {
+      throw new NotFoundException('Players not found!');
     }
+
+    const { matches, themes, difficulty } = challenge;
+
+    const size = themes.length;
+    const questions = [];
+    let i = 0;
+
+    while (i < matches) {
+      const theme = themes[((i % size) + size) % size];
+      const prompt = this.questionBuilderService.handle({ difficulty, theme });
+
+      try {
+        const { status, data } = await this.httpService
+          .post<GPTResponse>(
+            'https://api.openai.com/v1/chat/completions',
+            {
+              model: 'gpt-3.5-turbo',
+              messages: [{ role: 'system', content: prompt }],
+            },
+            {
+              headers: {
+                Authorization: process.env.OPENAI_API_KEY,
+                'Content-Type': 'application/json',
+              },
+            },
+          )
+          .toPromise();
+
+        if (status !== 200) {
+          throw new InternalServerErrorException('Internal error');
+        }
+
+        const question = JSON.parse(data.choices[0].message.content);
+
+        questions.push({
+          id: crypto.randomBytes(20).toString('hex'),
+          theme,
+          question: question.question,
+          answers: question.answers,
+          correct: question.correct,
+        });
+      } catch (error) {}
+
+      i++;
+    }
+
+    await this.challengeService.save({
+      ...challenge,
+      config: {
+        matches,
+        score: { challenged: 0, challenger: 0 },
+        questions,
+      },
+    });
   }
 
   @Put('/challenge/:id')

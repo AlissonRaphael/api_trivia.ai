@@ -5,7 +5,7 @@ export interface UpdateGame {
 }
 
 type AnswersStatus = {
-  question: string;
-  selectedAlternative: string;
+  questionId: string;
+  selected: string;
   time: string;
 };

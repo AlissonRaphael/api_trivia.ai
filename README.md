@@ -1,7 +1,7 @@
 # Trivia.ai
 [![GitHub](https://img.shields.io/github/license/AlissonRaphael/api_trivia.ai)](https://github.com/AlissonRaphael/api_trivia.ai/blob/main/LICENSE)
 
-This repository contains the implementation of an api for a game show inspired by trivia-crack (perguntados)
+This repository contains the implementation of an api for a game show inspired by trivia-crack
 
 ## Techs
 ![GithubPages Badge](https://img.shields.io/badge/-TypeScript-000?style=flat-square&logo=typescript&logoColor=white&color=3178C6)
